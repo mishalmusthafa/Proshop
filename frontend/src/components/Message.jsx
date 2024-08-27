@@ -9,3 +9,4 @@ Message.defaultProp = {
 };
 
 export default Message;
+
