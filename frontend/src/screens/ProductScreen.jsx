@@ -36,7 +36,6 @@ function ProductScreen() {
         navigate('/cart')
     }
 
-
     return (
         <>
             <Link to="/" className="btn btn-light my-3">
