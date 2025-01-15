@@ -45,6 +45,15 @@ function PaymentScreen() {
                             checked
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         ></Form.Check>
+                        <Form.Check
+                            type="radio"
+                            className="my-2"
+                            label="GPay "
+                            id="Gpay"
+                            name="paymentMethod"
+                            value="Gpay"
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        ></Form.Check>
                     </Col>
                 </Form.Group>
                 <Button type="submit" variant="primary">
