@@ -1,6 +1,7 @@
 import express from 'express';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Error Handler
 app.use(notFound);
