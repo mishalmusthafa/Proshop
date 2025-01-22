@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        paymentResult: {
+        paymentResult: { //Paypal payment result
             id: { type: String },
             status: { type: String },
             update_time: { type: String },

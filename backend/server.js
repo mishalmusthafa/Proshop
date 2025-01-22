@@ -26,6 +26,12 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Paypal route
+app.get('/api/config/paypal', (req, res) =>
+    // This way we dont wanna pass clientid through frontend to the paypal
+    res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+);
+
 // Error Handler
 app.use(notFound);
 app.use(errorHandler);

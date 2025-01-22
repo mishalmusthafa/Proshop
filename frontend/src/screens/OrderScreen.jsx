@@ -9,12 +9,12 @@ const OrderScreen = () => {
     const { id: orderId } = useParams();
     const { data: order, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
-    console.log(order);
-
     return isLoading ? (
         <Loader />
     ) : error ? (
-        <Message variant="danger" />
+        <Message variant="danger">
+            {error?.data?.message || error.error}
+        </Message>
     ) : (
         <>
             <h1>{order._id}</h1>
@@ -73,11 +73,11 @@ const OrderScreen = () => {
                                                 rounded
                                             ></Image>
                                         </Col>
-                                        <Col md={4}>
+                                        <Col>
                                             <Link
                                                 to={`/product/${item.product}`}
                                             >
-                                                <strong>{item.name}</strong>
+                                                {item.name}
                                             </Link>
                                         </Col>
                                         <Col md={4}>
@@ -120,10 +120,9 @@ const OrderScreen = () => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                              {/* PAY ORDER PLACEHOLDER */}
-                              {/* MARK AS PAID PLACEHOLDER */}
+                                {/* PAY ORDER PLACEHOLDER */}
+                                {/* MARK AS PAID PLACEHOLDER */}
                             </ListGroup.Item>
-
                         </ListGroup>
                     </Card>
                 </Col>
