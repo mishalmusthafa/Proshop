@@ -44,7 +44,7 @@ function CartScreen() {
                         {cartItems.map((item) => (
                             <ListGroup.Item key={item._id}>
                                 <Row>
-                                    <Col md={2}>
+                                    <Col md={1}>
                                         <Image
                                             src={item.image}
                                             alt={item.name}
