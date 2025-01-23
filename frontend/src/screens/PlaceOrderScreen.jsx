@@ -36,9 +36,9 @@ function PlaceOrderScreen() {
                 taxPrice: cart.taxPrice,
                 shippingPrice: cart.shippingPrice,
                 totalPrice: cart.totalPrice,
-            }).unwrap();
+            }).unwrap(); //For accessing the payload immediately after the mutation
             dispatch(clearCartItems());
-            console.log(res);
+            console.log(res);   
             navigate(`/order/${res._id}`);
         } catch (error) {
             toast.error(error);
