@@ -30,13 +30,14 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        paymentResult: { //Paypal payment result
+        paymentResult: {
+            //Paypal payment result
             id: { type: String },
             status: { type: String },
             update_time: { type: String },
             email_address: { type: String },
         },
-        itemPrice: {
+        itemsPrice: {
             type: Number,
             required: true,
             default: 0.0,

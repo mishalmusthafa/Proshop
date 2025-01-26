@@ -20,8 +20,8 @@ import { useDispatch } from 'react-redux';
 function ProductScreen() {
     const { id: productId } = useParams();
 
-    const dispatch = useDispatch() 
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [qty, setQty] = useState(1);
 
@@ -31,10 +31,10 @@ function ProductScreen() {
         error,
     } = useGetProductDetailsQuery(productId);
 
-    const addToCartHandler = ()=>{
-        dispatch(addToCart({...product,qty}))
-        navigate('/cart')
-    }
+    const addToCartHandler = () => {
+        dispatch(addToCart({ ...product, qty }));
+        navigate('/cart');
+    };
 
     return (
         <>
@@ -120,7 +120,11 @@ function ProductScreen() {
                                                         )
                                                     }
                                                 >
-                                                    {[...Array(product.countInStock).keys()].map((x) => (
+                                                    {[
+                                                        ...Array(
+                                                            product.countInStock
+                                                        ).keys(),
+                                                    ].map((x) => (
                                                         <option
                                                             key={x + 1}
                                                             value={x + 1}

@@ -4,7 +4,7 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import {
     useGetOrderDetailsQuery,
     usePayOrderMutation,
-    useGetPayPalClientIdQuery,
+    useGetPaypalClientIdQuery,
 } from '../slices/orderApiSlice';
 import { useParams, Link } from 'react-router-dom';
 import { Row, Col, Button, ListGroup, Image, Card } from 'react-bootstrap';
@@ -29,7 +29,7 @@ const OrderScreen = () => {
         data: paypal,
         isLoading: loadingPayPal,
         error: errorPayPal,
-    } = useGetPayPalClientIdQuery();
+    } = useGetPaypalClientIdQuery();
 
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -60,7 +60,7 @@ const OrderScreen = () => {
             try {
                 await payOrder({ orderId, details });
                 refetch();
-                toast.success('Payment Successful');
+                toast.success('Order is paid');
             } catch (err) {
                 toast.error(err?.data?.message || err.message);
             }
@@ -68,9 +68,10 @@ const OrderScreen = () => {
     }
 
     async function onApproveTest(data, action) {
+        console.log('OnapproveTest is running');
         await payOrder({ orderId, details: { payer: {} } });
         refetch();
-        toast.success('Payment Successful');
+        toast.success('Order is paid');
     }
 
     function onError(err) {
@@ -78,14 +79,12 @@ const OrderScreen = () => {
     }
 
     function createOrder(data, actions) {
-        console.log('Creating orders');
         return actions.order
             .create({
                 purchase_units: [
                     {
                         amount: {
-                            currency_code: 'USD',
-                            value: order.totalPrice,
+                            value: order.itemsPrice,
                         },
                     },
                 ],
@@ -187,7 +186,7 @@ const OrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items:</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>${order.itemsPrice}</Col>
                                 </Row>
 
                                 <Row>
@@ -208,38 +207,34 @@ const OrderScreen = () => {
 
                             {/* Replacer PAYORDER PLACEHOLDER */}
                             {/* Paypal buttons and payorder */}
-                            <ListGroup.Item>
-                                {!order.isPaid && (
-                                    <ListGroup.Item>
-                                        {loadingPay && <Loader />}
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {loadingPay && <Loader />}
 
-                                        {isPending ? (
-                                            <Loader />
-                                        ) : (
+                                    {isPending ? (
+                                        <Loader />
+                                    ) : (
+                                        <div>
+                                            <Button
+                                                onClick={onApproveTest}
+                                                style={{
+                                                    marginBottom: '10px',
+                                                }}
+                                            >
+                                                Test Pay Order
+                                            </Button>
                                             <div>
-                                                <Button
-                                                    onClick={onApproveTest}
-                                                    style={{
-                                                        marginBottom: '10px',
-                                                    }}
-                                                >
-                                                    Test Pay Order
-                                                </Button>
-                                                <div>
-                                                    <PayPalButtons
-                                                        createOrder={
-                                                            createOrder
-                                                        }
-                                                        onApprove={onApprove}
-                                                        onError={onError}
-                                                    ></PayPalButtons>
-                                                </div>
+                                                <PayPalButtons
+                                                    createOrder={createOrder}
+                                                    onApprove={onApprove}
+                                                    onError={onError}
+                                                ></PayPalButtons>
                                             </div>
-                                        )}
-                                    </ListGroup.Item>
-                                )}
-                                {/* MARK AS PAID PLACEHOLDER */}
-                            </ListGroup.Item>
+                                        </div>
+                                    )}
+                                </ListGroup.Item>
+                            )}
+                            {/* MARK AS PAID PLACEHOLDER */}
                         </ListGroup>
                     </Card>
                 </Col>

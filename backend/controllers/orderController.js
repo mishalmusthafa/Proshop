@@ -9,7 +9,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         orderItems,
         shippingAddress,
         paymentMethod,
-        itemPrice,
+        itemsPrice,
         taxPrice,
         shippingPrice,
         totalPrice,
@@ -28,7 +28,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
             user: req.user._id,
             shippingAddress,
             paymentMethod,
-            itemPrice,
+            itemsPrice,
             taxPrice,
             shippingPrice,
             totalPrice,
@@ -69,7 +69,9 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @routes PUT /api/orders/:id/pay
 // @access Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
+    console.log('Calling updateOrderToPaid from backend');
     const order = await Order.findById(req.params.id);
+    console.log('Updting order to pay in backend');
     if (order) {
         order.isPaid = true;
         order.paidAt = Date.now();

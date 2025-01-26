@@ -14,6 +14,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 function PlaceOrderScreen() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const cart = useSelector((state) => state.cart);
 
     const [createOrder, { isLoading, error }] = useCreateOrderMutation();
@@ -32,13 +33,12 @@ function PlaceOrderScreen() {
                 orderItems: cart.cartItems,
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
-                itemPrice: cart.itemPrice,
+                itemsPrice: cart.itemsPrice,
                 taxPrice: cart.taxPrice,
                 shippingPrice: cart.shippingPrice,
                 totalPrice: cart.totalPrice,
             }).unwrap(); //For accessing the payload immediately after the mutation
             dispatch(clearCartItems());
-            console.log(res);   
             navigate(`/order/${res._id}`);
         } catch (error) {
             toast.error(error);
