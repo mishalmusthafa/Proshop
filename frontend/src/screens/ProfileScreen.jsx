@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateProfileMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
-import { Table, Form, ListGroup, Row, Col, Button } from 'react-bootstrap';
+import { Table, Form, Row, Col, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import { useGetMyOrdersQuery } from '../slices/orderApiSlice';
@@ -24,7 +24,6 @@ function Profile() {
         useUpdateProfileMutation();
 
     const { data: orders, isLoading, error } = useGetMyOrdersQuery();
-    console.log(orders);
 
     useEffect(() => {
         if (userInfo) {

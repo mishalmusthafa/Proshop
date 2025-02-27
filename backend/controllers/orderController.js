@@ -72,7 +72,6 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @routes PUT /api/orders/:id/pay
 // @access Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-    console.log('Calling updateOrderToPaid from backend');
     const order = await Order.findById(req.params.id);
     console.log('Updting order to pay in backend');
     if (order) {
@@ -104,7 +103,13 @@ const updateToDelivered = asyncHandler(async (req, res) => {
 // @routes GET /api/orders
 // @access Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-    res.send('Get all orders');
+    const orders = await Order.find({}).populate('user','id name');
+    if (orders) {
+        res.status(200).json(orders);
+    } else {
+        res.status(400);
+        throw new Error('No orders available');
+    }
 });
 
 export {
